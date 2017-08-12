@@ -409,12 +409,12 @@ textarea {
 
 .container {
   text-align: center;
-  left: 70%;
+  left: 85%;
   -webkit-transform: translate3d(-50%, -50%, 0);
   -webkit-transition: translate3d(-50%, -50%, 0);
   transition: translate3d(-50%, -50%, 0);
   position: absolute;
-  top: 60%;
+  top: 30%;
 }
 
 #camera {
