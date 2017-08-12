@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <title>Document</title>
+</head>
+<body id="perfil">
+  <div class="container clearfix1">
+     <div class="avatar">
+        <svg version="1.1" id="camera" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           viewBox="0 0 25 15" enable-background="new 0 0 25 15" xml:space="preserve">
+          <path id="cameraFrame" fill="none" stroke="white" stroke-miterlimit="10" d="M23.1,14.1H1.9c-0.6,0-1-0.4-1-1V1.9c0-0.6,0.4-1,1-1h21.2
+             c0.6,0,1,0.4,1,1v11.3C24.1,13.7,23.7,14.1,23.1,14.1z"/>
+          <path id="circle" fill="none" stroke="#ffffff" stroke-width="1.4" stroke-miterlimit="12" d="M17.7,7.5c0-2.8-2.3-5.2-5.2-5.2S7.3,4.7,7.3,7.5s2.3,5.2,5.2,5.2
+             S17.7,10.3,17.7,7.5z"/>
+          <g id="plus">
+           <path fill="none" id="plusLine" class="line" stroke="#ffffff" stroke-linecap="round" stroke-miterlimit="10" d="M20.9,2.3v4.4"/>
+           <path fill="none" class="line"stroke="#ffffff" stroke-linecap="round" stroke-miterlimit="10" d="M18.7,4.6h4.4"/>
+          </g>
+       </svg>
+       <div id="openModal">
+         <input id="fileUpload" type="file" />
+       </div>
+     </div>
+   </div>
+   <div class="out">
+     <input type="button" value="Logout" class="logout"/>
+   </div>
+   <div class="fecha-reloj">
+     <p>Hoy es <span id="fecha"></span></p>
+     <div>En <span id="hora"></span> cambiará la tasa</div>
+   </div>
+   <div ng-app="employeeApp" ng-controller="employeeController">
+      <div class="content-wrapper">
+        <h2>Mi Perfil</h2>
+        <div class="everyone-wrapper">
+            <section ng-switch on="(editIndex == $index)" ng-repeat="person in employeeArray track by $index" class="clearfix">
+                  <div class="info-wrapper clearfix">
+                    <h3 ng-switch-default>{{person.firstName}} {{person.lastName}} <span>| {{person.jobTitle}}</span></h3>
+                    <p ng-switch-default class="p-desc">{{person.jobDesc}}</p>
+                    <span ng-switch-default class="from">From: {{person.from.city}}, {{person.from.state}}</span>
+                    <span ng-switch-default class="phone">Phone: {{person.phone}}</span>
+                    <span ng-switch-default class="email">Email: {{person.email}}</span>
+
+                    <h3 ng-switch-when="true">
+                        <input ng-model="editObject.firstName" placeholder="First Name" type="text"/>
+                        <input ng-model="editObject.lastName" placeholder="Last Name" type="text"/>
+                        <input ng-model="editObject.jobTitle" placeholder="Job Title" type="text"/>
+                    </h3>
+
+                    <p ng-switch-when="true" class="p-desc">
+                        <textarea ng-model="editObject.jobDesc" placeholder="Job Description"> </textarea>
+                    </p>
+                    <span ng-switch-when="true" class="from">
+                        <input ng-model="editObject.from.city" id="city" type="text" placeholder="City"/>
+                        <input ng-model="editObject.from.state" id="state" type="text" placeholder="ST"/>
+                    </span>
+                    <span  ng-switch-when="true" class="phone">
+                        <input ng-model="editObject.phone" type="text" placeholder="Phone"/>
+                    </span>
+                    <span  ng-switch-when="true" class="email">
+                        <input ng-model="editObject.email" type="text" placeholder="Email"/>
+                    </span>
+                </div>
+                <div class="edit-wrapper clearfix">
+                    <button class="blue" ng-switch-default ng-click="editingPerson($index)">Editar</button>
+                    <button class="green" ng-switch-when="true" ng-click="saveEdit($index)">Guardar</button>
+                    <button class="red" ng-switch-when="true" ng-click="cancelEdit()">X</button>
+                </div>
+              </section>
+          </div>
+      </div>
+  </div>
+  <div id="permissionWrapper" class="permissionWrapper">
+    <label for="inputFilterPermission" class="listFilterLabel">Buscar</label>
+    <input id="inputFilterPermission" type="text" class="listFilterInput"/>
+    <a id="addUser" href="#" class="iconAdd" title="Add new user"></a>
+    <div class="clear"></div>
+    <table id="listFilterPermission" class="listFilterContainer permissionsTable" cellspacing="0" cellpadding="0">
+      <thead id="permissionsHead">
+        <tr class="doNotFilter">
+          <th>Username</th>
+          <th><div id="view" class="permissionTag" data-perm="view">En Progreso</div></th>
+          <th><div id="delete" class="permissionTag" data-perm="delete">Cambiando</div></th>
+          <th><div id="admin" class="permissionTag" data-perm="admin">Finalizado</div></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="permissionsBody">
+        <tr>
+          <td><span class="iconUser"></span><span contenteditable="true" class="userName">Natalie Corzo</span></td>
+          <td><div class="permissionTag active" data-perm="view">En Progreso</div></td>
+          <td><div class="permissionTag" data-perm="delete">Cambiando</div></td>
+          <td><div class="permissionTag" data-perm="admin">Finalizado</div></td>
+          <td><a href="#" class="iconRemove deleteUser" title="Remove this user"></a></td>
+        </tr>
+        <tr>
+          <td><span class="iconUser"></span><span contenteditable="true" class="userName">Miguel Araujo</span></td>
+          <td><div class="permissionTag active" data-perm="view">En Progreso</div></td>
+          <td><div class="permissionTag" data-perm="delete">Cambiando</div></td>
+          <td><div class="permissionTag" data-perm="admin">Finalizado</div></td>
+          <td><a href="#" class="iconRemove deleteUser" title="Remove this user"></a></td>
+        </tr>
+        <tr>
+          <td><span class="iconUser"></span><span contenteditable="true" class="userName">Sergio Peña</span></td>
+          <td><div class="permissionTag" data-perm="view">En Progreso</div></td>
+          <td><div class="permissionTag active" data-perm="delete">Cambiando</div></td>
+          <td><div class="permissionTag" data-perm="admin">Finalizado</div></td>
+          <td><a href="#" class="iconRemove deleteUser" title="Remove this user"></a></td>
+        </tr>
+        <tr>
+          <td><span class="iconUser"></span><span contenteditable="true" class="userName">Susana Diaz</span></td>
+          <td><div class="permissionTag" data-perm="view">En Progreso</div></td>
+          <td><div class="permissionTag" data-perm="delete">Cambiando</div></td>
+          <td><div class="permissionTag active" data-perm="admin">Finalizado</div></td>
+          <td><a href="#" class="iconRemove deleteUser" title="Remove this user"></a></td>
+        </tr>
+         <tr>
+          <td><span class="iconUser"></span><span contenteditable="true" class="userName">Juan Quispe</span></td>
+          <td><div class="permissionTag" data-perm="view">En Progreso</div></td>
+          <td><div class="permissionTag" data-perm="delete">Cambiando</div></td>
+          <td><div class="permissionTag active" data-perm="admin">Finalizado</div></td>
+          <td><a href="#" class="iconRemove deleteUser" title="Remove this user"></a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="conversor">
+    <p>El tipo de cambio actual, la compra es <span class="soles"></span></p>
+    <div class="monedas">
+      <input type="text" placeholder="Introduzca el monto" id="soles">
+      <select class="divisasInput" name="input">
+        <option value="usd">USD</option>
+        <option value="pen">PEN</option>
+      </select>
+      <button type="button" name="button" id="convierte">Convertir</button>
+    </div>
+    <div class="result">
+      <p class="recibir">El Monto en <span class="moneda"></span> es: <span class="recibo"></span></p>
+    </div>
+  </div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js" charset="utf-8"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" charset="utf-8"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js" charset="utf-8"></script>
+  <script src="assets/js/app.js" charset="utf-8"></script>
+</body>
+</html>
