@@ -238,14 +238,14 @@ $('#enviar').on('click',function(e){
   e.preventDefault();
   console.log('otra pagina');
   if(($('#login__username').val().toLowerCase() == "paulo") ||($('#login__username').val().toLowerCase() == "martin") && $('#login__password').val()=="123456"){
-    window.location.href = "perfil.html";
+    window.location.href = "./perfil.html";
   }else{
     $('#error').show();
   }
 });
 
 $('.logout').on('click',function(){
-  window.location.href = "index.html";
+  window.location.href = "./index.html";
 });
 
 //fecha y hora
