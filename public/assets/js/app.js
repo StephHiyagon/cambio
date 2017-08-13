@@ -120,7 +120,7 @@ $("#permissionWrapper").on("click", "#addUser", function(){
                    '<td><div class="permissionTag active" data-perm="view">En Progreso</div></td>' +
                    '<td><div class="permissionTag" data-perm="delete">Cambiando</div></td>' +
                    '<td><div class="permissionTag" data-perm="admin">Finalizado</div></td>' +
-                   '<td><a href="#" class="iconRemove deleteUser" title="Remove this user"></a></td>' +
+                   '<td><a href="" class="iconRemove deleteUser" title="Remove this user"></a></td>' +
                  '</tr>';
   var user = $(template);
   $("#permissionsBody").prepend(user);
